@@ -151,7 +151,7 @@ $requestAddress = "http://$cablecast_ip/Cablecast/Autopilot.ForceEvent.Data.aspx
 
 	if($resultNumber > 1)		{
 		$count = 0;		while ($count <= ($resultNumber - 1))			{
-			$beginingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']);			$endingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['EndTime']);
+			$beginingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']);			$endingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['EndTime']);
 		
 			//Check To see if a show is scheduled to play right now			if(($beginingTime <= ($convertedDayTime + ($offset * 60 * 60))) && ($endingTime > ($convertedDayTime + ($offset * 60 * 60))))				{
 				$testNumber = $count;  //sets testNumber to show Id of currently scheduled show
