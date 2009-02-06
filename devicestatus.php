@@ -176,7 +176,6 @@ $gotShow = '';
 		$count = 0;
 		while ($count <= ($resultNumber - 1))
 			{
-
 			$beginingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']);
 			$endingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['EndTime']);
 			
