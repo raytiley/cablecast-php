@@ -1,0 +1,7 @@
+These scripts all require nusoap.php.  So make sure you download it and have it available to the script.
+
+There are known bugs if their is only one item being returned.  For example you only have one show scheduled, one show on your VOD server (or one show in a project if your restricting).  Basically try to have lots of shows :)
+
+I'll always be improving these scripts.  So always come back and see if there is something new.
+
+-ray
