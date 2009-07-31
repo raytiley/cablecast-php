@@ -1,4 +1,4 @@
-<?php//Configure Script
+﻿<?php//Configure Script
 
 $server = "http://frontdoor.ctn4maine.org/";  //include trailing backslash
 $channelID = 1;  //Cablecast Channel ID
