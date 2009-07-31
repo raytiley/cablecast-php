@@ -1,9 +1,9 @@
 <?php//Configure Script
 
-$server = "http://frontdoor.ctn4maine.org/";  //include trailing backslash
-$channelID = 1;  //Cablecast Channel ID
-$defualtSource = "Community Bulletin Board";
-//End Configure$server = $server."CablecastWS/CablecastWS.asmx?WSDL";
+$server = "http://frontdoor.ctn4maine.org/";  //include trailing backslash
+$channelID = 1;  //Cablecast Channel ID
+$defualtSource = "Community Bulletin Board";
+//End Configure$server = $server."CablecastWS/CablecastWS.asmx?WSDL";
 require_once('nusoap.php');$client = new nusoap_client($server, 'wsdl');  //Creates New SOAP client using WSDL file//Some funky Time Calculations$offset = 0;$day = 60*60*24;$currentDay = date("Y-m-d")."T00:00:00";$currentDayTime =  date("Y-m-d")."T".date("H:i:s");$convertedDayTime = strtotime($currentDayTime);$searchTimestr = $convertedDayTime-$day+($offset * 60 * 60);$searchTime = date("Y-m-d", $searchTimestr)."T".date("H:i:s", $searchTimestr);$result = $client->call('GetScheduleInformation', array(    'ChannelID'        => $channelID,    'FromDate'         => $currentDay,    'ToDate'           => $searchTime,
 	    'restrictToShowID' => 0), '', '', false, true);
 
