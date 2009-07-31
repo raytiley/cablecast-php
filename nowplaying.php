@@ -12,7 +12,8 @@ $client = new nusoap_client($server, 'wsdl');  //Creates New SOAP client using W
 
 $offset = 0;$day = 60*60*24;$currentDay = date("Y-m-d")."T00:00:00";$currentDayTime =  date("Y-m-d")."T".date("H:i:s");$convertedDayTime = strtotime($currentDayTime);$searchTimestr = $convertedDayTime-$day+($offset * 60 * 60);$searchTime = date("Y-m-d", $searchTimestr)."T".date("H:i:s", $searchTimestr);
 
-$result = $client->call('GetScheduleInformation', array(    'ChannelID'        => $channelID,    'FromDate'         => $currentDay,    'ToDate'           => $searchTime,     'restrictToShowID' => 0), '', '', false, true);
+$result = $client->call('GetScheduleInformation', array(    'ChannelID'        => $channelID,    'FromDate'         => $currentDay,    'ToDate'           => $searchTime,
+	'restrictToShowID' => 0), '', '', false, true);
 
 $resultNumber = count($result['GetScheduleInformationResult']['ScheduleInfo']);
 
