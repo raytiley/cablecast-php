@@ -12,7 +12,16 @@ $client = new nusoap_client("http://YOURSERVER/CablecastWS/CablecastWS.asmx?WSDL
 $searchDate = date("Y-m-d")."T12:00:00";
 
 // Search for all shows that have an event date less than now that are available for VOD
-$result = $client->call('AdvancedShowSearch', array(    'ChannelID'        => 1,    'searchString'         => '',    'eventDate'           => $searchDate,    'dateComparator'      => '<',    'restrictToCategoryID'  => 0,      'restrictToProducerID'   => 0,     'restrictToProjectID'    =>  0,    'displayStreamingShowsOnly'   =>  1,    'searchOtherSites'     =>   0,), '', '', false, true);
+$result = $client->call('AdvancedShowSearch', array(
+    'ChannelID'        => 1,
+    'searchString'         => '',
+    'eventDate'           => $searchDate,
+    'dateComparator'      => '<',
+    'restrictToCategoryID'  => 0,  
+    'restrictToProducerID'   => 0, 
+    'restrictToProjectID'    =>  0,
+    'displayStreamingShowsOnly'   =>  1,
+    'searchOtherSites'     =>   0,), '', '', false, true);
 
 
 $resultNumber = count($result['AdvancedShowSearchResult']['SiteSearchResult']['Shows']['ShowInfo']);  // of shows for loop	
