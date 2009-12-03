@@ -71,7 +71,7 @@ else
 				$day = date("Y-m-dT12:00:00", strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']));
 				if($day != $startDay)
 				{
-					echo "<tr><th colspan=\"2\">".date("l F n Y", strtotime($day))."</th></tr>\n";
+					echo "<tr><th colspan=\"2\">".date("l F n, Y", strtotime($day))."</th></tr>\n";
 					$startDay = $day;
 				}
  				echo "<tr><td>".date("g:i a", strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']))."</td><td>".$result['GetScheduleInformationResult']['ScheduleInfo'][$count]['ShowTitle']."</td></tr>\n";
