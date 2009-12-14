@@ -68,10 +68,10 @@ else
 			echo "<table>\n<tr><th>Time</th><th>Program Title</th></tr>\n";
 			while ($count <= ($resultNumber -1))
 			{
-				$day = date("Y-m-dT12:00:00", strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']));
+				$day = date("Y-m-d", strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']));
 				if($day != $startDay)
 				{
-					echo "<tr><th colspan=\"2\">".date("l F n, Y", strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime'])."</th></tr>\n";
+					echo "<tr><th colspan=\"2\">".date("l F jS, Y", strtotime($day))."</th></tr>\n";
 					$startDay = $day;
 				}
  				echo "<tr><td>".date("g:i a", strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']))."</td><td>".$result['GetScheduleInformationResult']['ScheduleInfo'][$count]['ShowTitle']."</td></tr>\n";
