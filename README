@@ -1,8 +1,4 @@
-These scripts all require nusoap.php.  I have included a copy that all of these scripts are tested with.
+***** THIS IS NOT PRODUCTION CODE ****
 
-There are known bugs if their is only one item being returned.  
-
-For example you only have one show scheduled, one show on your VOD server (or one show in a project if your restricting).  Basically try to have lots of shows :)
-
-
--ray
+This code is only intended to show how you can use the CablecastWS. The code is ugly and probably has security
+issues if running on a live server. Use at your own risk. You have been warned.
