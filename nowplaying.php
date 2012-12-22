@@ -1,75 +1,45 @@
 <?php
 
 //Configure Script  
-
-$server = "http://frontdoor.ctn4maine.org/";  //include trailing backslash
-$channelID = 1;  //Cablecast Channel ID
+date_default_timezone_set('America/New_York'); // Set this to timezone of Cablecast Server
+$server = "http://frontdoor.ctn5.org/";  //include trailing backslash
+$channelID = 2;  //Cablecast Channel ID
 $defualtSource = "Community Bulletin Board";
-
 //End Configure
 
 $server = $server."CablecastWS/CablecastWS.asmx?WSDL";
 
-require_once('nusoap.php');
-$client = new nusoap_client($server, 'wsdl');  //Creates New SOAP client using WSDL file
+$client = new SoapClient($server);  //Creates New SOAP client using WSDL file
 
-//Some funky Time Calculations
-$offset = 0;
-$day = 60*60*24;
-$currentDay = date("Y-m-d")."T00:00:00";
-$currentDayTime =  date("Y-m-d")."T".date("H:i:s");
-$convertedDayTime = strtotime($currentDayTime);
-$searchTimestr = $convertedDayTime-$day+($offset * 60 * 60);
-$searchTime = date("Y-m-d", $searchTimestr)."T".date("H:i:s", $searchTimestr);
-
-$result = $client->call('GetScheduleInformation', array(
+$result = $client->GetScheduleInformation(array(
     'ChannelID'        => $channelID,
-    'FromDate'         => $currentDay,
-    'ToDate'           => $searchTime,
-    'restrictToShowID' => 0), '', '', false, true);
-    
-$resultNumber = count($result['GetScheduleInformationResult']['ScheduleInfo']);
+    'FromDate'         => date("Y-m-d") . "T00:00:00",
+    'ToDate'           => date("Y-m-d") . "T23:59:59",
+    'restrictToShowID' => 0));
 
-if($resultNumber == 0)
-{
-echo $defualtSource;
+if($result->GetScheduleInformationResult->ScheduleInfo == NULL) {
+	$schedule = array(); // No results so set results to empty array.	
+} else {
+	// If the result isn't an array, then its a single result. Put that single
+	// result into an array so we can just work with an array below.
+	// Its simpler that way.
+	$schedule = is_array($result->GetScheduleInformationResult->ScheduleInfo) ?
+		$result->GetScheduleInformationResult->ScheduleInfo :
+		array($result->GetScheduleInformationResult->ScheduleInfo);
 }
 
-if($resultNumber == 1)
-{
-echo $defualtSource;
+$foundRun = FALSE;
+foreach($schedule as $run) {
+	$beginingTime = strtotime($run->StartTime);
+	$endingTime = strtotime($run->EndTime);
+	if($beginingTime <= time() && $endingTime > time())
+	{
+		$foundRun = TRUE;
+		echo $run->ShowTitle;
+		break;
+	}
 }
 
-if($resultNumber > 1)
-{
-$count = 0;
-$beginingTime;
-$endingTime;
-$testNumber = 0;
-while ($count <= ($resultNumber - 1))
-{
-$beginingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['StartTime']);
-$endingTime = strtotime($result['GetScheduleInformationResult']['ScheduleInfo'][$count]['EndTime']);
-
-if(($beginingTime <= ($convertedDayTime + ($offset * 60 * 60))) && ($endingTime > ($convertedDayTime + ($offset * 60 * 60))))
-{
-$testNumber = $count;
+if($foundRun == FALSE) {
+	echo $defualtSource;
 }
-
-$count++;
-}
-
-if ($testNumber == '0')
-{
-echo $defualtSource;
-}
-
-else
-{
-
-echo $result['GetScheduleInformationResult']['ScheduleInfo'][$testNumber]['ShowTitle'];
-
-}
-}
-
-?>
